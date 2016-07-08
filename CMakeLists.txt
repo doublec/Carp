@@ -24,6 +24,16 @@ if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -D_GNU_SOURCE")
 endif()
 
+# Enable C99 due to use of 'for' loop initial declaration
+# From: https://stackoverflow.com/questions/24840030/forcing-c99-in-cmake-to-use-for-loop-initial-declaration
+if (CMAKE_VERSION VERSION_LESS "3.1")
+  if (CMAKE_C_COMPILER_ID STREQUAL "GNU")
+    set (CMAKE_C_FLAGS "--std=c99 ${CMAKE_C_FLAGS}")
+  endif ()
+else ()
+  set (CMAKE_C_STANDARD 99)
+endif ()
+
 set(SOURCE_DIR src)
 include(globfiles.cmake)
 
